@@ -63,7 +63,7 @@ function Navbar() {
       <div
         className={` ${
           isActive ? "show" : "hidden"
-        } fixed transition-all delay-1000 top-0 backdrop-blur-3xl w-full z-10  h-full flex  items-center flex-col gap-11`}>
+        } fixed transition-all  top-0 bg-white w-full z-10  h-full flex  items-center flex-col gap-11`}>
         <svg
           onClick={() => {
             setIsactive(false);
@@ -83,22 +83,30 @@ function Navbar() {
 
         <div className="">
           <ul className="p-6 text-white">
-            <li className="hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+            <li>
               <Link to="/" className="text-xl font-lale">
                 خانه
               </Link>
             </li>
           </ul>
         </div>
-        <div className=" lg:flex items-center gap-x-2">
+        <div className="flex items-center gap-x-2">
           <Link to="/signup">
-            <button className="flex font-vazir items-center text-black  justify-center px-6 py-2.5 font-semibold">
+            <button
+              onClick={() => {
+                setIsactive(false);
+              }}
+              className="flex font-vazir items-center text-black  justify-center px-6 py-2.5 font-semibold">
               ثبت نام
             </button>
           </Link>
 
           <Link to="/login">
-            <button className="flex font-vazir items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
+            <button
+              onClick={() => {
+                setIsactive(false);
+              }}
+              className="flex font-vazir items-center justify-center rounded-md bg-[#4A3BFF] text-white px-6 py-2.5 font-semibold hover:shadow-lg hover:drop-shadow transition duration-200">
               ورود
             </button>
           </Link>

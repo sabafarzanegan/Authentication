@@ -7,34 +7,16 @@
       "password": "!234"
     },
     {
-      "name": "mahdi",
-      "email": "mahdi@gmail.com",
-      "pass": "12345",
+      "username": "user1",
+      "email": "user1@gmail.com",
+      "password": "12345",
       "id": 2
     },
     {
-      "name": "user1",
-      "email": "user1@gmail.com",
-      "pass": "12345",
-      "id": 3
-    },
-    {
-      "name": "user2",
+      "username": "user2",
       "email": "user2@gmail.com",
-      "pass": "12345",
-      "id": 4
-    },
-    {
-      "name": "user2",
-      "email": "user2@gmail.com",
-      "pass": "12345",
-      "id": 5
-    },
-    {
-      "username": "user5",
-      "email": "user5@gmail.com",
       "password": "12345",
-      "id": 6
+      "id": 3
     }
   ]
 }

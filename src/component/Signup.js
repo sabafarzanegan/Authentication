@@ -1,9 +1,10 @@
 import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
+  const navigate = useNavigate();
   return (
     <>
       <h2 className="text-center mt-5  font-lale font-bold text-xl">
@@ -39,6 +40,7 @@ function Signup() {
               axios
                 .post("http://localhost:8000/user", values)
                 .then((res) => console.log(res));
+              navigate("/login");
               setTimeout(() => {
                 setSubmitting(false);
               }, 3000);

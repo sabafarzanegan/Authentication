@@ -1,11 +1,27 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const navigate = useNavigate();
+  const loginSubmit = (e) => {
+    e.preventDefault();
+    axios.get("http://localhost:8000/user").then((res) => {
+      res.data.map((user) => {
+        if (user.email === email && user.password === pass) {
+          console.log("success");
+          navigate("/");
+        } else if (user.email != email || user.password !== pass) {
+          console.log("wrong pass or email");
+        }
+      });
+    });
+  };
+
   return (
-    <>
+    <div>
       <h2 className="text-center mt-5  font-lale font-bold text-xl">
         فرم ورود
       </h2>
@@ -16,105 +32,69 @@ function Login() {
           <h1 className="pt-8 pb-6 font-bold text-5xl dark:text-gray-400 text-center cursor-default">
             Log In
           </h1>
-          <Formik
-            validate={(values) => {
-              const errors = {};
 
-              if (values.email === "") {
-                errors.email = "ایمیل را واردکنید";
-              } else if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-              ) {
-                errors.email = "ایمیل معتبر نیست";
-              }
-              if (values.password === "") {
-                errors.password = "رمز را وارد کنید";
-              }
-              return errors;
-            }}
-            initialValues={{ username: "", email: "", password: "" }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                setSubmitting(false);
-              }, 3000);
-            }}
-            action="#"
-            method="post"
-            className="space-y-4">
-            {({
-              values,
-              handleChange,
-              handleSubmit,
-              errors,
-              touched,
-              isSubmitting,
-            }) => (
-              <Form>
-                {console.log(errors)}
+          <form onSubmit={loginSubmit}>
+            <div>
+              <label
+                for="email"
+                className="mb-2 font-vazir dark:text-gray-400 text-lg">
+                ایمیل
+              </label>
+              <input
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                value={email}
+                placeholder="email"
+                id="email"
+                type="email"
+                name="email"
+                className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
+              />
+            </div>
+            <div>
+              <label
+                for="password"
+                className="mb-2 font-vazir dark:text-gray-400 text-lg">
+                رمز عبور
+              </label>
+              <input
+                value={pass}
+                onChange={(e) => {
+                  setPass(e.target.value);
+                }}
+                placeholder="password"
+                id="password"
+                name="password"
+                type="password"
+                className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 mb-2 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
+              />
+            </div>
+            <button
+              className={` font-vazir text-lg  font-semibold bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out`}
+              type="submit">
+              ورود
+            </button>
+          </form>
 
-                <div>
-                  <label
-                    for="email"
-                    className="mb-2 font-vazir dark:text-gray-400 text-lg">
-                    ایمیل
-                  </label>
-                  <Field
-                    placeholder="email"
-                    id="email"
-                    type="email"
-                    name="email"
-                    className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
-                  />
-                  <ErrorMessage
-                    name="email"
-                    component="p"
-                    className="text-red-600 font-vazir font-medium"
-                  />
-                </div>
-                <div>
-                  <label
-                    for="password"
-                    className="mb-2 font-vazir dark:text-gray-400 text-lg">
-                    رمز عبور
-                  </label>
-                  <Field
-                    placeholder="password"
-                    id="password"
-                    name="password"
-                    type="password"
-                    className="border dark:bg-indigo-700 dark:text-gray-300 dark:border-gray-700 p-3 mb-2 shadow-md placeholder:text-base border-gray-300 rounded-lg w-full focus:scale-105 ease-in-out duration-300"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="p"
-                    className="text-red-600 font-vazir font-medium"
-                  />
-                </div>
-                <button
-                  className={` font-vazir text-lg  font-semibold bg-gradient-to-r from-blue-500 to-purple-500 shadow-lg mt-6 p-2 text-white rounded-lg w-full hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition duration-300 ease-in-out`}
-                  type="submit">
-                  {isSubmitting ? "درحال ارسال" : "ثبت نام"}
-                </button>
-              </Form>
-            )}
-          </Formik>
           <div className="flex flex-col mt-4 items-center justify-center text-sm">
             <h3>
               <span className="font-vazir text-xl cursor-default dark:text-gray-300">
                 حساب کاربری ندارید؟
               </span>
-              <a
+              <Link
+                to="/signup"
                 className="group text-blue-400 transition-all duration-100 ease-in-out"
                 href="#">
                 <span className="text-xl px-1  bg-left-bottom ml-1 bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
-                  <Link to="/signup">ثبت نام</Link>
+                  ثبت نام
                 </span>
-              </a>
+              </Link>
             </h3>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

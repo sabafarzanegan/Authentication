@@ -13,7 +13,9 @@
 
 .show {
   top: 0;
+  transition: all ease 1s;
 }
 .hidden {
   top: -999;
+  transition: all ease 1s;
 }
